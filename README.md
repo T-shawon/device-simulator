@@ -77,5 +77,5 @@ npm run preview
 
 ## Submission Details
 
+- **Live Deployment URL**: [https://device-simulator-six.vercel.app](https://device-simulator-six.vercel.app)
 - **Source Code Repository**: [https://github.com/T-shawon/device-simulator](https://github.com/T-shawon/device-simulator)
-- **Live Deployment**: Deployed on Vercel
