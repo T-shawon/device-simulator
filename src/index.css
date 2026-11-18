@@ -1,0 +1,43 @@
+/* ── Reset & Baseline ─────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-app: #0c101b;
+  --bg-sidebar: #0e121e;
+  --bg-canvas: #070a14;
+  --bg-panel: #101626;
+  --bg-card: #151b2c;
+  --bg-card-active: #232c42;
+  --border-subtle: #192237;
+  --border-focus: #283656;
+  --text-main: #f1f5f9;
+  --text-sub: #94a3b8;
+  --text-dim: #55627a;
+  --blue-primary: #1d68ff;
+  --blue-hover: #1557e0;
+  --blue-track: #1d68ff;
+  --track-empty: #212c44;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', Helvetica, Arial, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-app);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}

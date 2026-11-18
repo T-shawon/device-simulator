@@ -1,0 +1,543 @@
+/* ══════════════════════════════════════════════════
+   Aetherix Device Sandbox Simulator
+   Pixel-Perfect Matching
+   ══════════════════════════════════════════════════ */
+
+/* ── App Shell Container ────────────────────────── */
+.app-shell {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: #0b0f19;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ── Sidebar ────────────────────────────────────── */
+.app-sidebar {
+  width: 232px;
+  min-width: 232px;
+  background: #0d121e;
+  border-right: 1px solid #151b2c;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 18px;
+  overflow-y: auto;
+}
+
+.sidebar-group + .sidebar-group {
+  margin-top: 36px;
+}
+
+.sidebar-heading {
+  font-size: 13px;
+  font-weight: 600;
+  color: #8b94a5;
+  margin-bottom: 12px;
+  letter-spacing: -0.1px;
+}
+
+/* ── Sidebar Device Buttons ─────────────────────── */
+.sidebar-device-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-device-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 14px;
+  background: #141b2b;
+  border: 1px solid #1c2438;
+  border-radius: 8px;
+  color: #8b96ab;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: grab;
+  transition: all 150ms ease;
+}
+
+.sidebar-device-btn:hover {
+  background: #1c2438;
+  border-color: #27344f;
+  color: #cbd5e1;
+}
+
+.sidebar-device-btn.is-active {
+  background: #2a344d;
+  border-color: #384666;
+  color: #ffffff;
+}
+
+.sidebar-device-btn.is-dragging {
+  opacity: 0.4;
+}
+
+.sidebar-device-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar-device-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Sidebar Saved Presets ──────────────────────── */
+.empty-preset-box {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 14px;
+  background: #0f1422;
+  border: 1px solid #1a2236;
+  border-radius: 8px;
+  color: #55627a;
+  font-size: 13px;
+}
+
+.sidebar-preset-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-preset-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #141b2b;
+  border: 1px solid #1c2438;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.sidebar-preset-card:hover {
+  background: #1c2438;
+  border-color: #27344f;
+}
+
+.preset-card-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.preset-card-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.preset-card-indicator.fan {
+  background: #1d68ff;
+}
+
+.preset-card-indicator.light {
+  background: #f5a623;
+}
+
+.preset-card-label {
+  font-size: 12px;
+  color: #cbd5e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preset-card-remove {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  border-radius: 4px;
+  transition: color 150ms ease;
+}
+
+.preset-card-remove:hover {
+  color: #ef4444;
+}
+
+/* ── Main Canvas Viewport ───────────────────────── */
+.main-canvas-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 28px;
+  overflow: hidden;
+}
+
+/* ── Canvas Top Header Bar ──────────────────────── */
+.canvas-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 38px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.canvas-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+}
+
+.canvas-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-canvas {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btn-clear {
+  background: #141b2c;
+  border: 1px solid #232e48;
+  color: #cbd5e1;
+  padding: 8px 18px;
+}
+
+.btn-clear:hover {
+  background: #1b243b;
+  border-color: #2e3c5c;
+  color: #ffffff;
+}
+
+.btn-save {
+  background: #1668fe;
+  border: none;
+  color: #ffffff;
+  padding: 8px 20px;
+  box-shadow: 0 2px 10px rgba(22, 104, 254, 0.35);
+}
+
+.btn-save:hover {
+  background: #1059e0;
+  box-shadow: 0 4px 14px rgba(22, 104, 254, 0.5);
+}
+
+/* ── Canvas Box Container ───────────────────────── */
+.canvas-container {
+  flex: 1;
+  background: #070a14;
+  border: 1px solid #141b2d;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 150ms ease;
+}
+
+.canvas-container.drag-hover {
+  border-color: #1d68ff;
+  box-shadow: inset 0 0 40px rgba(29, 104, 255, 0.08);
+}
+
+/* ── Canvas Empty State ─────────────────────────── */
+.canvas-empty-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #55627a;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+
+/* ── Canvas Active Device Layout ────────────────── */
+.canvas-active-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 20px 20px 28px;
+}
+
+.canvas-visual-slot {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.canvas-controls-slot {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════════
+   Living Room Fan Illustration (Image 4)
+   ══════════════════════════════════════════════════ */
+.w-full { width: 100%; }
+.max-w-sm { max-width: 24rem; }
+.h-full { height: 100%; }
+.max-h-sm { max-height: 24rem; }
+.flex { display: flex; }
+.justify-center { justify-content: center; }
+.items-center { align-items: center; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.overflow-hidden { overflow: hidden; }
+.rounded-full { border-radius: 9999px; }
+.z-10 { z-index: 10; }
+.w-80 { width: 20rem; }
+.h-80 { height: 20rem; }
+.w-20 { width: 5rem; }
+.h-20 { height: 5rem; }
+.w-14 { width: 3.5rem; }
+.h-14 { height: 3.5rem; }
+.w-8 { width: 2rem; }
+.h-8 { height: 2rem; }
+.bg-\[\#333f52\] { background-color: #333f52; }
+
+@media (min-width: 768px) {
+  .md\:pt-16 { padding-top: 4rem; }
+  .md\:overflow-visible { overflow: visible; }
+  .md\:w-\[100px\] { width: 100px; }
+  .md\:h-\[100px\] { height: 100px; }
+  .md\:w-20 { width: 5rem; }
+  .md\:h-20 { height: 5rem; }
+  .md\:w-14 { width: 3.5rem; }
+  .md\:h-14 { height: 3.5rem; }
+  .md\:w-96 { width: 24rem; }
+  .md\:h-96 { height: 24rem; }
+}
+
+.fan-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fan-rotor {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.fan-rotor.is-spinning {
+  animation: fan-spin var(--spin-time, 1s) linear infinite;
+}
+
+@keyframes fan-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ══════════════════════════════════════════════════
+   Device Control Panels (Image 1 & 4)
+   ══════════════════════════════════════════════════ */
+.device-control-panel {
+  width: 440px;
+  max-width: 90%;
+  background: #0f1526;
+  border: 1px solid #1b243c;
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+.panel-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.panel-section-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #e2e8f0;
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+
+/* ── Toggle Switch (Blue when ON like Image 1) ──── */
+.panel-toggle {
+  width: 48px;
+  height: 26px;
+  border-radius: 13px;
+  background: #242f49;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 200ms ease;
+  outline: none;
+}
+
+.panel-toggle.is-on {
+  background: #1d68ff;
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 200ms ease;
+}
+
+.panel-toggle.is-on .toggle-thumb {
+  transform: translateX(22px);
+}
+
+/* ── Color Temperature Buttons (Image 1) ────────── */
+.color-btn-group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.color-card-btn {
+  height: 38px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 150ms ease;
+  outline: none;
+}
+
+.color-card-btn:hover:not(:disabled) {
+  transform: scale(1.03);
+}
+
+.color-card-btn.is-active {
+  border-color: #1d68ff !important;
+  box-shadow: 0 0 0 1px rgba(29, 104, 255, 0.5);
+}
+
+.color-card-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ── Slider Label & Full-width Track ────────────── */
+.slider-label-row {
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+
+.panel-slider-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.panel-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.panel-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+
+.panel-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.panel-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+/* ══════════════════════════════════════════════════
+   Responsive Breakpoints
+   ══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .app-shell {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .app-sidebar {
+    width: 100%;
+    min-width: unset;
+    border-right: none;
+    border-bottom: 1px solid #161c2d;
+    padding: 16px;
+    flex-direction: row;
+    gap: 20px;
+    overflow-x: auto;
+  }
+
+  .sidebar-group + .sidebar-group {
+    margin-top: 0;
+  }
+
+  .main-canvas-area {
+    padding: 16px;
+    min-height: 520px;
+  }
+
+  .device-control-panel {
+    width: 100%;
+    padding: 16px;
+  }
+}
